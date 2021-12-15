@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:5000'
 export default async function loginFunction(
   url: string,
   method: string,
-  dados?: unknown | string
+  dados?: unknown | string,
 ) {
   const cookies = parseCookies()
   let ret: any
@@ -32,6 +32,6 @@ export default async function loginFunction(
 }
 
 const verifyError = (e: AxiosError) => {
-  console.log('verify', e.response)
-  return e.response?.status
+  console.log('verify', e)
+  return e
 }
