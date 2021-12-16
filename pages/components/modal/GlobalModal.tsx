@@ -13,7 +13,6 @@ export const MODAL_TYPES = {
 const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.CREATE_MODAL]: CreateModal,
   [MODAL_TYPES.SUCCESS_MODAL]: SuccessModal,
-
 }
 
 type GlobalModalContext = {
@@ -23,10 +22,8 @@ type GlobalModalContext = {
 }
 
 const initalState: GlobalModalContext = {
-  showModal: () => {
-  },
-  hideModal: () => {
-  },
+  showModal: () => {},
+  hideModal: () => {},
   store: {},
 }
 
@@ -40,11 +37,11 @@ type con = {
 }
 const type: con = { modalType: '', modalProps: '', show: false }
 type transStyle = {
-  unmounted: { opacity: number },
-  entering: { opacity: number },
-  entered: { opacity: number },
-  exiting: { opacity: number },
-  exited: { opacity: number },
+  unmounted: { opacity: number }
+  entering: { opacity: number }
+  entered: { opacity: number }
+  exiting: { opacity: number }
+  exited: { opacity: number }
 }
 let transitionStyles: transStyle = {
   unmounted: { opacity: 0.4 },
@@ -69,7 +66,7 @@ export const GlobalModal: React.FC<{}> = ({ children }) => {
   const hideModal = () => {
     setStore({
       ...store,
-      modalType: null,
+      modalType: 'n',
       modalProps: {},
       show: false,
     })
@@ -81,25 +78,16 @@ export const GlobalModal: React.FC<{}> = ({ children }) => {
       return null
     }
     // @ts-ignore
-    return < ModalComponent id='global-modal' {...modalProps} style={{ ...transitionStyles[state] }} />
-
+    return (
+      <ModalComponent id="global-modal" {...modalProps} style={{ state }} />
+    )
   }
-  let prevState = ''
   return (
     <GlobalModalContext.Provider value={{ store, showModal, hideModal }}>
-      <Transition in={store.show} timeout={100}>
-        {state => {
-          if (!!prevState) {
-            prevState = state
-          }
-          if (prevState != state) {
-            console.log(state)
-            return (
-              renderComponent(state)
-            )
-          }
-        }
-        }
+      <Transition in={store.show} timeout={400}>
+        {(state) => {
+          return renderComponent(state)
+        }}
       </Transition>
       {children}
     </GlobalModalContext.Provider>

@@ -6,32 +6,27 @@ export const SuccessModal = ({ style }: any) => {
   const { hideModal, store } = useGlobalModalContext()
   const { modalProps } = store || {}
   const { title, confirmBtn } = modalProps || {}
-
+  console.log(style)
   const handleModalToggle = () => {
     hideModal()
   }
   return (
-    <ModalWrapper teste={style.opacity}>
-      <Modal title={title || 'Create Modal'}>
-        <span>
-          Sucesso
-        </span>
+    <ModalWrapper>
+      <Modal state={style.state}>
+        <span>Sucesso</span>
         <div>
           <button onClick={() => handleModalToggle()}>close</button>
-          {
-            confirmBtn && <button onClick={() => confirmBtn()}>teste</button>
-          }
+          {confirmBtn && <button onClick={() => confirmBtn()}>teste</button>}
         </div>
       </Modal>
     </ModalWrapper>
   )
 }
 type teste = {
-  teste: number
+  state: string
 }
-const ModalWrapper = styled.div<teste>`
-  ${({ teste }) => css`
-    opacity: ${teste};
+const ModalWrapper = styled.div`
+  ${() => css`
     position: fixed;
     z-index: 99;
     top: 0;
@@ -47,12 +42,9 @@ const ModalWrapper = styled.div<teste>`
   `}
 `
 
-const Modal = styled.div`
-  ${() => css`
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: auto;
-    background-color: green;
-  `}
+const Modal = styled.div<teste>`
+  transform: translateY(${({ state }) =>
+    state === 'entered' ? '0' : '-100%'});
+  transition: transform 1s;
+}
 `
