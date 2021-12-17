@@ -7,12 +7,10 @@ const Login: NextPage = () => {
   const [login, setLogin] = useState({ user: '', password: '' })
   const router = useRouter()
   const { showModal } = useGlobalModalContext()
-  const confirmBtn = () => {
-    confirm('teste')
-  }
+
   const submit = async (e: any) => {
     e.preventDefault()
-    showModal(MODAL_TYPES.SUCCESS_MODAL, { title: 'teste', confirmBtn, show: true })
+    showModal(MODAL_TYPES.SUCCESS_MODAL, { title: 'teste', show: true, content: 'Sucesso!', timeToHide: 6000 })
     /*
     if (login.user != '' && login.password != '') {
       const { data } = await loginFunction('/login', 'POST', login)

@@ -2,17 +2,20 @@ import React, { createContext, useContext, useState } from 'react'
 import { CreateModal } from './CreateModal'
 import { SuccessModal } from './SuccessModal'
 import { Transition } from 'react-transition-group'
+import { ErrorModal } from './ErrorModal'
 
 export const MODAL_TYPES = {
   CREATE_MODAL: 'CREATE_MODAL',
   DELETE_MODAL: 'DELETE_MODAL',
   UPDATE_MODAL: 'UPDATE_MODAL',
   SUCCESS_MODAL: 'SUCCESS_MODAL',
+  ERROR_MODAL: 'ERROR_MODAL',
 }
 
 const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.CREATE_MODAL]: CreateModal,
   [MODAL_TYPES.SUCCESS_MODAL]: SuccessModal,
+  [MODAL_TYPES.ERROR_MODAL]: ErrorModal,
 }
 
 type GlobalModalContext = {
@@ -22,34 +25,26 @@ type GlobalModalContext = {
 }
 
 const initalState: GlobalModalContext = {
-  showModal: () => {},
-  hideModal: () => {},
+  showModal: () => {
+  },
+  hideModal: () => {
+  },
   store: {},
 }
 
 const GlobalModalContext = createContext(initalState)
 export const useGlobalModalContext = () => useContext(GlobalModalContext)
 
-type con = {
+type ModalProps = {
   modalType: any
   modalProps: any
-  show: boolean
+  title?: string
+  content: string
+  show: boolean,
+  timeToHide: number
 }
-const type: con = { modalType: '', modalProps: '', show: false }
-type transStyle = {
-  unmounted: { opacity: number }
-  entering: { opacity: number }
-  entered: { opacity: number }
-  exiting: { opacity: number }
-  exited: { opacity: number }
-}
-let transitionStyles: transStyle = {
-  unmounted: { opacity: 0.4 },
-  entering: { opacity: 0.7 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 0.5 },
-  exited: { opacity: 0 },
-}
+const type: ModalProps = { modalType: '', modalProps: '', title: '', content: '', show: false, timeToHide: 5000 }
+
 
 export const GlobalModal: React.FC<{}> = ({ children }) => {
   const [store, setStore] = useState(type)
@@ -66,20 +61,19 @@ export const GlobalModal: React.FC<{}> = ({ children }) => {
   const hideModal = () => {
     setStore({
       ...store,
-      modalType: 'n',
+      modalType: null,
       modalProps: {},
       show: false,
     })
   }
 
-  const renderComponent = (state: any) => {
+  const renderComponent = (state: string) => {
     const ModalComponent = MODAL_COMPONENTS[modalType]
     if (!modalType || !ModalComponent) {
       return null
     }
-    // @ts-ignore
     return (
-      <ModalComponent id="global-modal" {...modalProps} style={{ state }} />
+      <ModalComponent id='global-modal' {...modalProps} style={{ state }} />
     )
   }
   return (

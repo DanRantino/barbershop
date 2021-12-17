@@ -1,50 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobalModalContext } from './GlobalModal'
-import styled, { css } from 'styled-components'
+import { Modal, ModalButton, ModalButtonWrapper, ModalContent, ModalContentWrapper, ModalWrapper } from './styles'
 
 export const SuccessModal = ({ style }: any) => {
   const { hideModal, store } = useGlobalModalContext()
-  const { modalProps } = store || {}
-  const { title, confirmBtn } = modalProps || {}
-  console.log(style)
+  const { modalType, modalProps } = store || {}
+  const { confirmBtn, content, timeToHide } = modalProps || {}
   const handleModalToggle = () => {
     hideModal()
   }
+  useEffect(() => {
+    setTimeout(() => {
+      hideModal()
+    }, timeToHide)
+  }, [])
+
+
   return (
     <ModalWrapper>
-      <Modal state={style.state}>
-        <span>Sucesso</span>
-        <div>
-          <button onClick={() => handleModalToggle()}>close</button>
-          {confirmBtn && <button onClick={() => confirmBtn()}>teste</button>}
-        </div>
+      <Modal state={style.state} type={modalType}>
+        <ModalContentWrapper>
+          <ModalContent>{content}</ModalContent>
+        </ModalContentWrapper>
+        <ModalButtonWrapper>
+          <ModalButton onClick={() => handleModalToggle()} />
+        </ModalButtonWrapper>
       </Modal>
     </ModalWrapper>
   )
 }
-type teste = {
-  state: string
-}
-const ModalWrapper = styled.div`
-  ${() => css`
-    position: fixed;
-    z-index: 99;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-  `}
-`
-
-const Modal = styled.div<teste>`
-  transform: translateY(${({ state }) =>
-    state === 'entered' ? '0' : '-100%'});
-  transition: transform 1s;
-}
-`
