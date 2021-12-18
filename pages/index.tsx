@@ -34,7 +34,6 @@ const Home: NextPage<any> = ({ cookies }) => {
   useEffect(() => {
     !cookies && router.push('/login')
     const c = nookies.get()
-    console.log(c)
   }, [])
   if (isLoading) {
     return (
