@@ -1,20 +1,19 @@
 import axios, { AxiosError } from 'axios'
-import { parseCookies } from 'nookies'
 
-const BASE_URL = 'http://localhost:5000'
+export const BASE_URL = 'http://localhost:5000'
 
 export default async function loginFunction(
   url: string,
   method: string,
   dados?: unknown | string,
+  authorization?: string
 ) {
-  const cookies = parseCookies()
   let ret: any
   if (method === 'POST') {
     ret = await axios
       .post(BASE_URL + url, dados, {
         headers: {
-          authorization: `${cookies.authorization}`,
+          authorization: `${authorization}`,
         },
       })
       .catch((err) => (ret = verifyError(err)))
@@ -23,7 +22,7 @@ export default async function loginFunction(
     ret = await axios
       .get(BASE_URL + url, {
         headers: {
-          authorization: `${cookies.authorization}`,
+          authorization: `${authorization}`,
         },
       })
       .catch((err) => (ret = verifyError(err)))
