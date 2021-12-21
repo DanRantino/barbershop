@@ -3,28 +3,9 @@ import nookies from 'nookies'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { WrapperMain } from './components/main/styles'
-import { RiLoaderLine } from 'react-icons/ri'
-import styled from 'styled-components'
 import loginFunction from './utils/loginFunction'
-
-const StyledSpinner = styled(RiLoaderLine)`
-  animation: spin 10s linear infinite;
-  color: blue;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-      color: red;
-    }
-    50% {
-      color: blue;
-    }
-    100% {
-      transform: rotate(360deg);
-      color: red;
-    }
-  }
-`
+import { StyledSpinner, WrapperSpinner } from './components/spinner'
+import { Profile } from './components/profile'
 
 const Home: NextPage<any> = ({ cookies }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -37,12 +18,12 @@ const Home: NextPage<any> = ({ cookies }) => {
   }, [])
   if (isLoading) {
     return (
-      <WrapperMain>
+      <WrapperSpinner>
         <StyledSpinner size={'15em'} />
-      </WrapperMain>
+      </WrapperSpinner>
     )
   }
-  return <WrapperMain>{}</WrapperMain>
+  return <WrapperMain><Profile /></WrapperMain>
 }
 
 export default Home
