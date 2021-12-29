@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const WrapperLogin = styled.div`
   ${() => css`
     background-color: #334551;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -17,13 +17,13 @@ export const LoginForm = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    height: 150px;
+    justify-content: space-around;
+    height: 20vh;
   `}
 `
 
 export const LoginInputs = styled.input`
-  ${() => css`
+  ${(props) => css`
     background-color: #cce7ff;
     border: none;
     width: 70%;
@@ -72,4 +72,27 @@ export const TitleSpan = styled.span`
     color: white;
     font-weight: bold;
   `}
+`
+
+export const LoginFooter = styled.footer`
+  ${() => css`
+    position: sticky;
+    display: flex;
+    height: 20vh;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+  `}
+`
+export const DivFooter = styled.div`
+  ${() => css`
+    display: flex;
+    padding: 20px;
+  `}
+`
+
+export const FileInput = styled.input`
+  ${() => css``}
 `

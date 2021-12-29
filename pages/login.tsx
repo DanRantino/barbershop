@@ -10,11 +10,14 @@ import loginFunction from './utils/loginFunction'
 import { setCookie } from 'nookies'
 import {
   ButtonLogin,
+  DivFooter,
+  LoginFooter,
   LoginForm,
   LoginInputs,
   TitleSpan,
   WrapperLogin,
 } from './components/login/styles'
+import Link from 'next/link'
 
 const Login: NextPage = () => {
   const [login, setLogin] = useState({ user: '', password: '' })
@@ -73,6 +76,11 @@ const Login: NextPage = () => {
         />
         <ButtonLogin>Login</ButtonLogin>
       </LoginForm>
+      <LoginFooter>
+        <DivFooter>
+          <Link href={'/signup'}>Cadastrar-se</Link>
+        </DivFooter>
+      </LoginFooter>
     </WrapperLogin>
   )
 }

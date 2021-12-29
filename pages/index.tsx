@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { WrapperMain } from './components/main/styles'
 import loginFunction from './utils/loginFunction'
-import { StyledSpinner, WrapperSpinner } from './components/spinner'
+import { StyledSpinner, WrapperSpinner } from './components/spinner/styles'
 import { Profile } from './components/profile'
 
 const Home: NextPage<any> = ({ cookies }) => {
@@ -23,7 +23,11 @@ const Home: NextPage<any> = ({ cookies }) => {
       </WrapperSpinner>
     )
   }
-  return <WrapperMain><Profile /></WrapperMain>
+  return (
+    <WrapperMain>
+      <Profile />
+    </WrapperMain>
+  )
 }
 
 export default Home

@@ -19,7 +19,6 @@ export const StyledSpinner = styled(RiLoaderLine)`
     }
   }
 `
-
 export const WrapperSpinner = styled.div`
   ${() => css`
     background-color: #334551;
