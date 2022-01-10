@@ -3,9 +3,9 @@ import nookies from 'nookies'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { WrapperMain } from './components/main/styles'
-import loginFunction from './utils/loginFunction'
 import { StyledSpinner, WrapperSpinner } from './components/spinner/styles'
 import { Profile } from './components/profile'
+import ServerLogin from './utils/server'
 
 const Home: NextPage<any> = ({ cookies }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,9 +35,10 @@ export default Home
 Home.getInitialProps = async (ctx) => {
   const { authorization } = nookies.get(ctx)
   console.log('server atuh', authorization)
+  ServerLogin.loginFunction('/refresh-login', 'POST', {}, authorization)
   const {
     data: { newToken },
-  } = await loginFunction('/refresh-login', 'POST', {}, authorization)
+  } = ServerLogin.getRet()
   nookies.set(ctx, 'authorization', newToken)
   return { cookies: newToken }
 }

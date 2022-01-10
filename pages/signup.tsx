@@ -1,12 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 import { NextPage } from 'next'
-import {
-  FileInput,
-  LoginForm,
-  LoginInputs,
-  WrapperLogin,
-} from './components/login/styles'
-import loginFunction from './utils/loginFunction'
+import { FileInput, LoginForm, LoginInputs, WrapperLogin } from './components/login/styles'
+import ServerLogin from './utils/server'
 
 type User = {
   name: string
@@ -28,15 +23,15 @@ const Signup: NextPage = () => {
       formData.append('user', user.name)
       formData.append('password', user.password)
     }
-    const resp = await loginFunction('/signup', 'POST', formData)
-    console.log(resp)
+    ServerLogin.loginFunction('/signup', formData)
+    //console.log(resp)
   }
   return (
     <WrapperLogin>
       <LoginForm onSubmit={(e) => onSubmit(e)}>
         <FileInput
-          id="picture"
-          type="file"
+          id='picture'
+          type='file'
           placeholder={'File'}
           onChange={(e) =>
             setUser((prevState) => ({
@@ -50,7 +45,7 @@ const Signup: NextPage = () => {
         </label>
         <LoginInputs
           id={'name'}
-          type="text"
+          type='text'
           placeholder={'Username'}
           onChange={(e) =>
             setUser((prevState) => ({
@@ -59,12 +54,12 @@ const Signup: NextPage = () => {
             }))
           }
         />
-        <label htmlFor="password" hidden>
+        <label htmlFor='password' hidden>
           Password
         </label>
         <LoginInputs
-          id="password"
-          type="password"
+          id='password'
+          type='password'
           placeholder={'Password'}
           onChange={(e) =>
             setUser((prevState) => ({
