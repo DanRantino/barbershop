@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
-import { CreateModal } from './CreateModal'
-import { SuccessModal } from './SuccessModal'
+import { CreateModal } from './components/CreateModal'
+import { SuccessModal } from './components/SuccessModal'
 import { Transition } from 'react-transition-group'
-import { ErrorModal } from './ErrorModal'
+import { ErrorModal } from './components/ErrorModal'
 
 export const MODAL_TYPES = {
   CREATE_MODAL: 'CREATE_MODAL',

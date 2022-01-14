@@ -34,7 +34,7 @@ export const Modal = styled.div<transitionState>`
             ||
             type === 'ERROR_MODAL' && 'red'
     };
-    transform: translateY(${
+    //transform: translateY(${
             state === 'entered' ? '0' : '-100%'});
     transition: transform 0.25s;
     justify-content: space-between;

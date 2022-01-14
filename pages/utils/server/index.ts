@@ -1,4 +1,5 @@
 import Login from './Login'
+import User from './userInfos'
 
 var Server = {
   URL: 'http://localhost:5000',
@@ -10,5 +11,7 @@ var Server = {
 
 var ServerLogin = Object.assign(Object.create(Server), Login)
 
-export default ServerLogin
+var ServerUser = Object.assign(Object.create(Server), User)
+
+export {ServerLogin,ServerUser}
 

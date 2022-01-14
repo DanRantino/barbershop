@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
+import { User } from '../../types/user'
 import {
   DivHorizontal,
   DivUser,
@@ -9,8 +10,9 @@ import {
   SpanUser,
 } from './styles'
 
-export const Profile: NextPage = () => {
-  const nome = 'Daniel Fürst'
+
+export const Profile: NextPage<User> = (props) => {
+  const nome = `${props.firstName} ${props.lastName}`
   return (
     <ProfileWrapper>
       <Image src={'/barberlogo.svg'} width={'100%'} height={'100%'} />

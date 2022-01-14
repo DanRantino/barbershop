@@ -5,16 +5,19 @@ import { useRouter } from 'next/router'
 import { WrapperMain } from './components/main/styles'
 import { StyledSpinner, WrapperSpinner } from './components/spinner/styles'
 import { Profile } from './components/profile'
-import ServerLogin from './utils/server'
+import { ServerLogin } from './utils/server'
+import { User } from './types/user'
 
-const Home: NextPage<any> = ({ cookies }) => {
+const Home: NextPage<any> = ({ cookies, initialUser }) => {
   const [isLoading, setIsLoading] = useState(false)
-
+  const [user, setUser] = useState<User | null>(initialUser)
   const router = useRouter()
 
+
   useEffect(() => {
-    !cookies && router.push('/login')
-    const c = nookies.get()
+    if (!cookies) {
+      router.push('/login')
+    }
   }, [])
   if (isLoading) {
     return (
@@ -25,20 +28,19 @@ const Home: NextPage<any> = ({ cookies }) => {
   }
   return (
     <WrapperMain>
-      <Profile />
+      <Profile firstName={user?.firstName} lastName={user?.lastName} />
     </WrapperMain>
   )
 }
 
-export default Home
 
 Home.getInitialProps = async (ctx) => {
   const { authorization } = nookies.get(ctx)
-  console.log('server atuh', authorization)
-  ServerLogin.loginFunction('/refresh-login', 'POST', {}, authorization)
-  const {
-    data: { newToken },
-  } = ServerLogin.getRet()
+  await ServerLogin.loginFunction('/user/refresh-token', {}, authorization, 'get')
+  const newToken = ServerLogin.getRet().authorization
+  const initialUser = ServerLogin.getRet()?.data?.user
   nookies.set(ctx, 'authorization', newToken)
-  return { cookies: newToken }
+  return { cookies: newToken, initialUser }
 }
+
+export default Home

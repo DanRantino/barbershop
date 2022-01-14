@@ -1,11 +1,10 @@
 import { NextPage } from 'next'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import { MODAL_TYPES, useGlobalModalContext } from './components/modal/GlobalModal'
 import { setCookie } from 'nookies'
-import { ButtonLogin, LoginForm, LoginInputs, TitleSpan, WrapperLogin } from './components/login/styles'
-import ServerLogin from './utils/server'
+import { ServerLogin } from './utils/server'
+import LoginEmailComponent from './components/login'
 
 const Login: NextPage = () => {
   const [login, setLogin] = useState({ user: '', password: '' })
@@ -15,58 +14,27 @@ const Login: NextPage = () => {
   const submit = async (e: any) => {
     e.preventDefault()
     if (login.user != '' && login.password != '') {
-      ServerLogin.loginFunction('/login', { user: login.user, password: login.password })
-      console.log(ServerLogin.getRet())
-      const { data } = ServerLogin.getRet()
-      if (data.auth) {
-        setCookie(null, 'authorization', data.token)
-        await router.push('/')
-      } else {
+      await ServerLogin.loginFunction('/user/signin', { email: login.user, password: login.password }, '')
+      const ret = ServerLogin.getRet()
+      if (ret.status > 205) {
         showModal(MODAL_TYPES.ERROR_MODAL, {
-          title: 'teste',
+          title: 'Error',
           show: true,
-          content: data.msg,
-          timeToHide: 4000,
+          content: ret.data.error,
         })
       }
-    } else {
-      showModal(MODAL_TYPES.ERROR_MODAL, {
-        title: 'teste',
-        show: true,
-        content: 'Digite senha e/ou usuário',
-        timeToHide: 4000,
-      })
+      if ((ret.status === 200) && (ret.data.auth != '')) {
+        setCookie(null, 'authorization', ret.authorization, {
+          maxAge: 30 * 24 * 60 * 60,
+        })
+        await router.push('/')
+      }
     }
+
   }
   return (
-    <WrapperLogin>
-      <TitleSpan>Barbearia CorteLiso</TitleSpan>
-      <Image src={'/barberlogo.svg'} width={500} height={500} />
-      <LoginForm onSubmit={submit}>
-        <label htmlFor='name' hidden>
-          Name
-        </label>
-        <LoginInputs
-          id='name'
-          type='text'
-          value={login.user}
-          placeholder={'Username'}
-          onChange={(v) => setLogin({ ...login, user: v.target.value })}
-        />
-        <br />
-        <label htmlFor='password' hidden>
-          Password
-        </label>
-        <LoginInputs
-          id='password'
-          type='password'
-          value={login.password}
-          placeholder={'Password'}
-          onChange={(v) => setLogin({ ...login, password: v.target.value })}
-        />
-        <ButtonLogin>Login</ButtonLogin>
-      </LoginForm>
-    </WrapperLogin>
+    <LoginEmailComponent type='sign up' action={submit} title={['BARBEARIA', 'Meio Corte']}
+                         state={[login, setLogin]} showFooter={true} />
   )
 }
 export default Login
