@@ -14,6 +14,7 @@ import {
 } from './styles'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
+import PasswordInput from '../passwordInput'
 
 type props = {
   type: 'sign in' | 'sign up',
@@ -23,15 +24,15 @@ type props = {
   state: [user: unknown, setUser: (value: unknown | ((prevState: unknown) => unknown)) => void]
 }
 
-const LoginEmailComponent: FC<props> = ({ type, action, title, state }, showFooter = false) => {
+const LoginEmailComponent: FC<props> = ({ type, action, title, state, showFooter = false }) => {
   const [user, setUser] = state
 
-  const Footer = () => (
+  const Footer = (login: boolean) => (
     <WrapperFooter>
       <FooterTemplate>
-        <NextLink href={'/signup'}>
+        <NextLink href={login ? '/signup' : '/login'}>
           <Link>
-            Sign in
+            {login ? 'Sign in' : 'Login'}
           </Link>
         </NextLink>
       </FooterTemplate>
@@ -43,12 +44,12 @@ const LoginEmailComponent: FC<props> = ({ type, action, title, state }, showFoot
       <WrapperSpan>
         {
           title.map((s, i) => (
-            <>
+            <div key={'span' + i}>
               <TitleSpan show={i == 1}>
                 {s}
               </TitleSpan>
               <br />
-            </>
+            </div>
           ))
         }
       </WrapperSpan>
@@ -56,40 +57,62 @@ const LoginEmailComponent: FC<props> = ({ type, action, title, state }, showFoot
         <NextImage src={'/barberlogo.svg'} layout={'fill'} />
       </WrapperImage>
       <WrapperForm>
-        <Form onSubmit={(e) => action(e)}>
+        <Form type={type} onSubmit={action}>
+          {
+            type === 'sign up' ? (
+              <>
+                <LoginInputs
+                  id={'firstName'}
+                  type='text'
+                  placeholder={'First Name'}
+                  onChange={(e) =>
+                    setUser((prevState) => ({
+                      ...prevState,
+                      firstName: e.target.value,
+                    }))
+                  }
+                  required={true}
+                />
+                <LoginInputs
+                  id={'lastName'}
+                  type='lastName'
+                  placeholder={'Last Name'}
+                  onChange={(e) =>
+                    setUser((prevState) => ({
+                      ...prevState,
+                      lastName: e.target.value,
+                    }))
+                  }
+                  required={true}
+                />
+              </>
+            ) : null
+          }
+
           <label htmlFor={'name'} hidden>
             Nome
           </label>
           <LoginInputs
             id={'name'}
-            type='text'
+            type='email'
             placeholder={'Username'}
             onChange={(e) =>
               setUser((prevState) => ({
                 ...prevState,
-                name: e.target.value,
+                user: e.target.value,
               }))
             }
+            required={true}
           />
           <label htmlFor='password' hidden>
             Password
           </label>
-          <LoginInputs
-            id='password'
-            type='password'
-            placeholder={'Password'}
-            onChange={(e) =>
-              setUser((prevState) => ({
-                ...prevState,
-                password: e.target.value,
-              }))
-            }
-          />
-          <ButtonLogin>{type}</ButtonLogin>
+          <PasswordInput setUser={setUser} />
+          <ButtonLogin>{type.toUpperCase()}</ButtonLogin>
         </Form>
       </WrapperForm>
       {
-        showFooter ? console.log('aqui') : null
+        showFooter == true ? Footer(true) : Footer(false)
       }
     </WrapperLogin>
   )

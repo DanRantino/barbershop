@@ -15,6 +15,13 @@ export const SuccessModal = ({ style }: any) => {
     }, timeToHide)
   }, [])
 
+  const endModal = () => {
+    setTimeout(() => hideModal(), 4000)
+  }
+
+  useEffect(() => {
+    endModal()
+  }, [])
 
   return (
     <ModalWrapper>

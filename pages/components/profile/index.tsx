@@ -1,32 +1,34 @@
-import { NextPage } from 'next'
-import Image from 'next/image'
-import { User } from '../../types/user'
+import { FC } from 'react'
+import NextImage from 'next/image'
 import {
-  DivHorizontal,
-  DivUser,
-  InputUser,
-  ProfileWrapper,
-  RedButtton,
-  SpanUser,
+  ButtonSearch,
+  ContainerInput,
+  ContainerProfile,
+  ContainerSearcher,
+  SearchInput,
+  SpanWelcome,
+  WrapperProfile,
 } from './styles'
+import { User } from '../../types/user'
 
+export type props = {
+  user: User
+}
 
-export const Profile: NextPage<User> = (props) => {
-  const nome = `${props.firstName} ${props.lastName}`
+export const Profile: FC<props> = ({ user }) => {
   return (
-    <ProfileWrapper>
-      <Image src={'/barberlogo.svg'} width={'100%'} height={'100%'} />
-      <DivUser>
-        <DivHorizontal>
-          <SpanUser>
-            Ola {nome}, não encontrou alguma coisa? Use a caixa a baixo!
-          </SpanUser>
-        </DivHorizontal>
-        <DivHorizontal>
-          <InputUser type="text" />
-          <RedButtton>Search</RedButtton>
-        </DivHorizontal>
-      </DivUser>
-    </ProfileWrapper>
+    <WrapperProfile>
+      <ContainerProfile>
+        <NextImage src={'/barberlogo.svg'} alt={'Foto do usuário'} layout={'fixed'} width={100} height={100} />
+      </ContainerProfile>
+      <ContainerSearcher>
+        <SpanWelcome>Olá {user?.firstName} {user?.lastName}</SpanWelcome>
+        <ContainerInput>
+          <SearchInput />
+          <ButtonSearch>Search</ButtonSearch>
+        </ContainerInput>
+      </ContainerSearcher>
+    </WrapperProfile>
+
   )
 }

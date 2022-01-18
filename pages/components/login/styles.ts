@@ -15,19 +15,24 @@ export const WrapperLogin = styled.div`
 export const WrapperForm = styled.div`
   ${() => css`
     display: flex;
-    height: 25vh;
+    height: 38vh;
     width: 100vw;
     align-items: center;
     justify-content: center;
   `}
 `
 
-export const Form = styled.form`
-  ${() => css`
+type propsForm = {
+  type: 'sign in' | 'sign up'
+}
+
+export const Form = styled.form<propsForm>`
+  ${({ type }) => css`
     display: flex;
-    justify-content: space-evenly;
+    flex: 1;
+    justify-content: ${type == 'sign up' ? 'space-between' : 'space-evenly'};
     flex-direction: column;
-    height: 70%;
+    height: ${type == 'sign up' ? '90%' : '70%'};
     width: 100%;
     align-items: center;
   `}
@@ -36,14 +41,19 @@ export const LoginInputs = styled.input`
   ${() => css`
     background-color: #cce7ff;
     border: none;
-    width: 40%;
+    width: 40vw;
     height: 30px;
     font-size: 1em;
     border-radius: 5px;
-    transition: width 0.5s ease-in-out, border 0.5s ease;
+    transition: all 0.5s ease-in-out, border 0.5s ease;
     text-align: center;
-    box-shadow: 2px 2px 2px 2px black;
-    margin-bottom: 10px;
+    box-shadow: 3px 3px 3px 3px black;
+    outline: 2px solid #cce7ff;
+    opacity: 0.7;
+
+    :hover {
+      opacity: 1;
+    }
 
     ::placeholder {
       color: #334551;
@@ -51,17 +61,12 @@ export const LoginInputs = styled.input`
     }
 
     :focus {
-      outline: none;
-      width: 60%;
-      border-radius: 10px;
       box-shadow: none;
+      outline: 2px solid black;
     }
 
     @media (min-width: 1023px) {
       width: 20%;
-      :focus {
-        width: 40%;
-      }
     }
   `}
 `
@@ -116,10 +121,10 @@ export const TitleSpan = styled.span<props>`
 export const WrapperFooter = styled.div`
   ${() => css`
     display: flex;
-    height: 25vh;
+    height: 5vh;
     width: 100vw;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
   `}
 `
 export const FooterTemplate = styled.footer`
@@ -168,6 +173,7 @@ export const ButtonLogin = styled.button`
     color: #cce7ff;
     font-weight: bold;
     box-shadow: 2px 2px 2px 2px black;
+    cursor: pointer;
 
     &:active {
       box-shadow: none;

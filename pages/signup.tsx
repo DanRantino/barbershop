@@ -4,31 +4,37 @@ import nookies from 'nookies'
 import { ServerLogin } from './utils/server'
 import LoginEmailComponent from './components/login'
 
-type User = {
-  name: string
-  password: string
-  image: File | null | Blob
-}
 
 const Signup: NextPage = () => {
-  const [user, setUser] = useState<User>({
-    name: '',
+  const [user, setUser] = useState({
+    user: '',
     password: '',
-    image: null,
+    firstName: '',
+    lastName: '',
   })
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    const formData = new FormData()
-    if (user.image) {
-      formData.append('user', user.name)
-      formData.append('password', user.password)
-    }
     const { authorization } = nookies.get()
-    await ServerLogin.loginFunction('/signup', formData, authorization)
+
+
+    await ServerLogin.loginFunction('/user/signup', {
+      email: user.user,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    }, authorization)
+    const ret = ServerLogin.getRet()
+    if (ret.status !== 201) {
+      alert(ret.error)
+      setUser({ firstName: '', lastName: '', password: '', user: '' })
+    }
   }
   return (
-    <LoginEmailComponent type='sign up' action={onSubmit} title={'Bem vindo, cadastre-se aqui!'}
-                         state={[user, setUser]} showFooter={false} />
+    <>
+      <title>Sign up</title>
+      <LoginEmailComponent type='sign up' action={onSubmit} title={['Bem vindo, cadastre-se aqui!']}
+                           state={[user, setUser]} showFooter={false} />
+    </>
   )
 }
 

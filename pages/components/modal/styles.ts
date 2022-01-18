@@ -24,35 +24,38 @@ export const ModalWrapper = styled.div`
 export const Modal = styled.div<transitionState>`
   ${({ state, type }) => css`
     display: flex;
+    color: black;
+    font-size: 1rem;
     width: 15%;
-    min-height: 5%;
-    height: auto;
+    //min-height: 5%;
+    height: 10%;
     border-radius: 5px;
     flex-direction: row;
     background-color: ${
             type === 'SUCCESS_MODAL' && 'greenyellow'
             ||
-            type === 'ERROR_MODAL' && 'red'
+            type === 'ERROR_MODAL' && ' #f26790;'
     };
-    //transform: translateY(${
-            state === 'entered' ? '0' : '-100%'});
-    transition: transform 0.25s;
-    justify-content: space-between;
-    padding: 10px;
+    transform: translateX(${
+            state === 'entered' ? '0' : '100%'});
+    opacity: ${state === 'exited' ? '0' : state == 'entering' ? '0' : state == 'entering' ? '1' : null};
+    transition: transform 0.25s ease-in, opacity 0.5s ease-in;
+    margin: 10px;
   `}
 }
 `
 export const ModalContentWrapper = styled.div`
   ${() => css`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     height: 100%;
+    width: 100%;
   `}
 `
 
 export const ModalContent = styled.div`
   ${() => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
     order: -1;
@@ -82,7 +85,7 @@ export const ModalButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f44336;
+    background-color: #f26790;
     border: none;
     height: 20px;
     width: 20px;

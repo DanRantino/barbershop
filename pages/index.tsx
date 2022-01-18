@@ -2,22 +2,25 @@ import type { NextPage } from 'next'
 import nookies from 'nookies'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { WrapperMain } from './components/main/styles'
 import { StyledSpinner, WrapperSpinner } from './components/spinner/styles'
-import { Profile } from './components/profile'
 import { ServerLogin } from './utils/server'
 import { User } from './types/user'
+import { ContentWrapper, Wrapper } from './components/styles'
+import { Profile } from './components/profile'
 
 const Home: NextPage<any> = ({ cookies, initialUser }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User | null>(initialUser)
   const router = useRouter()
 
+  const pushLogin = async () => await router.push('/login')
 
   useEffect(() => {
+    setIsLoading(true)
     if (!cookies) {
-      router.push('/login')
+      pushLogin().then()
     }
+    setIsLoading(false)
   }, [])
   if (isLoading) {
     return (
@@ -27,9 +30,11 @@ const Home: NextPage<any> = ({ cookies, initialUser }) => {
     )
   }
   return (
-    <WrapperMain>
-      <Profile firstName={user?.firstName} lastName={user?.lastName} />
-    </WrapperMain>
+    <Wrapper>
+      <ContentWrapper>
+        <Profile user={user} />
+      </ContentWrapper>
+    </Wrapper>
   )
 }
 

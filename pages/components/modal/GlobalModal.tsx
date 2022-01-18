@@ -10,12 +10,14 @@ export const MODAL_TYPES = {
   UPDATE_MODAL: 'UPDATE_MODAL',
   SUCCESS_MODAL: 'SUCCESS_MODAL',
   ERROR_MODAL: 'ERROR_MODAL',
+  CENTER_CONFIRM_MODAL: 'CENTER_CONFIRM_MODAL',
 }
 
 const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.CREATE_MODAL]: CreateModal,
   [MODAL_TYPES.SUCCESS_MODAL]: SuccessModal,
   [MODAL_TYPES.ERROR_MODAL]: ErrorModal,
+  [MODAL_TYPES.CENTER_CONFIRM_MODAL]: null,
 }
 
 type GlobalModalContext = {
@@ -80,6 +82,9 @@ export const GlobalModal: React.FC<{}> = ({ children }) => {
     <GlobalModalContext.Provider value={{ store, showModal, hideModal }}>
       <Transition in={store.show} timeout={400}>
         {(state) => {
+          {
+            console.log(state)
+          }
           return renderComponent(state)
         }}
       </Transition>

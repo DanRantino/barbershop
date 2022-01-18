@@ -16,11 +16,13 @@ const Login: NextPage = () => {
     if (login.user != '' && login.password != '') {
       await ServerLogin.loginFunction('/user/signin', { email: login.user, password: login.password }, '')
       const ret = ServerLogin.getRet()
+      console.log(ret)
       if (ret.status > 205) {
         showModal(MODAL_TYPES.ERROR_MODAL, {
           title: 'Error',
           show: true,
-          content: ret.data.error,
+          content: ret.error,
+          confirmBtn: false,
         })
       }
       if ((ret.status === 200) && (ret.data.auth != '')) {
@@ -33,8 +35,11 @@ const Login: NextPage = () => {
 
   }
   return (
-    <LoginEmailComponent type='sign up' action={submit} title={['BARBEARIA', 'Meio Corte']}
-                         state={[login, setLogin]} showFooter={true} />
+    <>
+      <title>Login</title>
+      <LoginEmailComponent type='sign in' action={submit} title={['BARBEARIA', 'Meio Corte']}
+                           state={[login, setLogin]} showFooter={true} />
+    </>
   )
 }
 export default Login

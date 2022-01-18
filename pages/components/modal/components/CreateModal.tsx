@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobalModalContext } from '../GlobalModal'
 import styled, { css } from 'styled-components'
 
@@ -9,6 +9,14 @@ export const CreateModal = () => {
   const handleModalToggle = () => {
     hideModal()
   }
+  const endModal = () => {
+    setTimeout(() => hideModal(), 4000)
+  }
+
+  useEffect(() => {
+    endModal()
+  }, [])
+
   return (
     <ModalWrapper>
       <Modal title={title || 'Create Modal'}>
@@ -30,19 +38,19 @@ export const CreateModal = () => {
 
 const ModalWrapper = styled.div`
   ${() => css`
-    position: fixed;
-    z-index: 99;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-  `}
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+`}
 `
 
 const Modal = styled.div`
