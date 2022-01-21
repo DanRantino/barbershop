@@ -2,14 +2,14 @@ import styled, { css } from 'styled-components'
 
 export const WrapperPromo = styled.div`
   ${() => css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 165px;
-  margin-top: 25px;
-  overflow-y: hidden;
-`}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 165px;
+    margin-top: 25px;
+    overflow-y: hidden;
+  `}
 `
 export const ContentContainer = styled.div`
   ${() => css`
@@ -30,10 +30,10 @@ export const ContentContainer = styled.div`
 export const ContainerDescriptionPromo = styled.div`
   ${() => css`
     width: 80%;
-    height: 80%;
+    height: 70%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     @media (max-width: 1000px) {
       width: 90%;
       height: 90%;
