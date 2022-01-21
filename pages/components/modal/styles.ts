@@ -27,8 +27,9 @@ export const Modal = styled.div<transitionState>`
     color: black;
     font-size: 1rem;
     width: 15%;
-    //min-height: 5%;
-    height: 10%;
+    min-width: fit-content;
+    min-height: 5%;
+    height: fit-content;
     border-radius: 5px;
     flex-direction: row;
     background-color: ${
@@ -46,8 +47,9 @@ export const Modal = styled.div<transitionState>`
 `
 export const ModalContentWrapper = styled.div`
   ${() => css`
-    height: 100%;
+    height: 50%;
     width: 100%;
+    padding: 10px;
   `}
 `
 

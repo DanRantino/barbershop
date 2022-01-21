@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useGlobalModalContext } from '../GlobalModal'
-import { Modal, ModalActions, ModalContent, ModalWrapper } from '../styles'
+import { Modal, ModalActions, ModalContent, ModalContentWrapper, ModalWrapper } from '../styles'
 
 export const ErrorModal = ({ style }: any) => {
   const { hideModal, store } = useGlobalModalContext()
@@ -31,12 +31,15 @@ export const ErrorModal = ({ style }: any) => {
   return (
     <ModalWrapper>
       <Modal state={style.state} type={'ERROR_MODAL'}>
-        <ModalContent>
-          <span>{content}</span>
-        </ModalContent>
-        <ModalActions>
-          {confirmBtn == true ? RenderButton() : null}
-        </ModalActions>
+        <ModalContentWrapper>
+          <ModalContent>
+            <span>{content}</span>
+          </ModalContent>
+          <ModalActions>
+            {confirmBtn == true ? RenderButton() : null}
+          </ModalActions>
+        </ModalContentWrapper>
+
       </Modal>
     </ModalWrapper>
   )

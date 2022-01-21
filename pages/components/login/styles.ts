@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import NextImage from 'next/image'
 
 export const WrapperLogin = styled.div`
   ${() => css`
@@ -9,6 +10,19 @@ export const WrapperLogin = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    @keyframes rotate {
+      from {
+        transform: rotateY(0deg);
+        width: 100vw;
+      }
+
+      to {
+        transform: rotateY(360deg);
+        width: 100vw;
+
+      }
+    }
   `}
 `
 
@@ -178,5 +192,23 @@ export const ButtonLogin = styled.button`
     &:active {
       box-shadow: none;
     }
+  `}
+`
+
+export const Image = styled(NextImage)`
+  ${() => css`
+    filter: invert(92%) sepia(65%) saturate(4235%) hue-rotate(175deg) brightness(101%) contrast(103%);
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+  `}
+`
+
+export const ImageWithoutRotate = styled(NextImage)`
+  ${() => css`
+    filter: invert(92%) sepia(65%) saturate(4235%) hue-rotate(175deg) brightness(101%) contrast(103%);
   `}
 `

@@ -57,17 +57,18 @@ export const ShowPassword = styled.input`
 
 export const ButtonShowPassword = styled.button`
   ${() => css`
-    background-color: #cce7ff;
-    border: none;
-    width: 10%;
-    height: 32px;
-    font-size: 1em;
-    transition: all 0.5s ease-in-out, border 0.5s ease;
-    text-align: center;
-    outline: 2px solid #cce7ff;
-    border-radius: 0 5px 5px 0;
+  background-color: #cce7ff;
+  border: none;
+  width: 10%;
+  min-width: 23px;
+  height: 32px;
+  font-size: 1em;
+  transition: all 0.5s ease-in-out, border 0.5s ease;
+  text-align: center;
+  outline: 2px solid #cce7ff;
+  border-radius: 0 5px 5px 0;
 
-  `}
+`}
 `
 
 

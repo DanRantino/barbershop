@@ -1,8 +1,12 @@
-import React, { FC, FormEvent } from 'react'
+import React, { FC, FormEvent, useEffect, useState } from 'react'
+import NextLink from 'next/link'
+import PasswordInput from '../passwordInput'
 import {
   ButtonLogin,
   FooterTemplate,
   Form,
+  Image,
+  ImageWithoutRotate,
   Link,
   LoginInputs,
   TitleSpan,
@@ -12,9 +16,6 @@ import {
   WrapperLogin,
   WrapperSpan,
 } from './styles'
-import NextImage from 'next/image'
-import NextLink from 'next/link'
-import PasswordInput from '../passwordInput'
 
 type props = {
   type: 'sign in' | 'sign up',
@@ -26,6 +27,12 @@ type props = {
 
 const LoginEmailComponent: FC<props> = ({ type, action, title, state, showFooter = false }) => {
   const [user, setUser] = state
+  const [isFirefox, setIsFirefox] = useState(false)
+
+
+  useEffect(() => {
+    window && setIsFirefox(window.navigator?.userAgent.indexOf('Firefox') !== -1)
+  }, [isFirefox])
 
   const Footer = (login: boolean) => (
     <WrapperFooter>
@@ -54,7 +61,12 @@ const LoginEmailComponent: FC<props> = ({ type, action, title, state, showFooter
         }
       </WrapperSpan>
       <WrapperImage>
-        <NextImage src={'/barberlogo.svg'} layout={'fill'} />
+        {
+          isFirefox ? <ImageWithoutRotate src={'/barberlogo.svg'} layout={'fill'} priority={true} />
+            :
+            <Image src={'/barberlogo.svg'} layout={'fill'} priority={true} />
+        }
+
       </WrapperImage>
       <WrapperForm>
         <Form type={type} onSubmit={action}>

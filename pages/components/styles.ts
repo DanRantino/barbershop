@@ -10,6 +10,6 @@ export const Wrapper = styled.div`
 `
 export const ContentWrapper = styled.div`
   ${() => css`
-    padding: 20px 70px 20px 70px;
+    padding: 5% 7% 5% 7%;
   `}
 `

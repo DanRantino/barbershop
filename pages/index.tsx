@@ -7,6 +7,7 @@ import { ServerLogin } from './utils/server'
 import { User } from './types/user'
 import { ContentWrapper, Wrapper } from './components/styles'
 import { Profile } from './components/profile'
+import Promo from './components/promo'
 
 const Home: NextPage<any> = ({ cookies, initialUser }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -33,6 +34,7 @@ const Home: NextPage<any> = ({ cookies, initialUser }) => {
     <Wrapper>
       <ContentWrapper>
         <Profile user={user} />
+        <Promo />
       </ContentWrapper>
     </Wrapper>
   )
